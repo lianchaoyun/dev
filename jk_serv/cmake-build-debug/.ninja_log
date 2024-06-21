@@ -1,0 +1,6 @@
+# ninja log v5
+9	3817	7241489030032965	CMakeFiles/jk.dir/jk.cpp.obj	c1d2b12070cb26b5
+9	1015	7241489453754878	jk.exe	d03eff57d0ebc4fe
+8	25020	7241485260678120	CMakeFiles/jk.dir/include/httplib/httplib.cc.obj	2b97232c934ba47a
+2	280	7241504743485316	build.ninja	7cfcea44ddbf3185
+9	25551	7241487316137050	CMakeFiles/jk.dir/httplib.cc.obj	88f2dc80ba6158e6

@@ -1,0 +1,3 @@
+C:/project/zhenzhen/jk/cmake-build-debug/CMakeFiles/jk.dir
+C:/project/zhenzhen/jk/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/project/zhenzhen/jk/cmake-build-debug/CMakeFiles/rebuild_cache.dir

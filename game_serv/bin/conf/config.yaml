@@ -1,0 +1,27 @@
+web:
+  host: "0.0.0.0"
+  port: 91
+  open: false
+
+chat:
+  host: "0.0.0.0"
+  port: 92
+  open: false
+
+play:
+  LogLevel: "debug"
+  LogPath: "./bin/log/"
+  TCPAddr: "0.0.0.0:93"
+  WSAddr: "0.0.0.0:94"
+  MaxConnNum: 100
+  open: true
+
+mysql:
+  username: "root"
+  password: "423522"
+  host: "127.0.0.1"
+  port: 3306
+  dbname: "zhenzhen"
+
+
+

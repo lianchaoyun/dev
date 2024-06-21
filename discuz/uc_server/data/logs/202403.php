@@ -1,0 +1,9 @@
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709565654	login	error: user=UCenterAdministrator; password=ad***3
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709565693	login	error: user=UCenterAdministrator; password=adm***56
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709565742	login	error: user=UCenterAdministrator; password=ad***6
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709565762	login	error: user=UCenterAdministrator; password=a***n
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709596974	login	error: user=UCenterAdministrator; password=ad***8
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709596986	login	error: user=UCenterAdministrator; password=A***n
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709596994	login	error: user=UCenterAdministrator; password=12***6
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709596997	login	error: user=UCenterAdministrator; password=12***89
+<?PHP exit;?>	UCenterAdministrator	103.233.8.166	1709597004	login	error: user=UCenterAdministrator; password=adm***or

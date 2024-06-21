@@ -1,0 +1,105 @@
+# Scrapy settings for tutouspider project
+#
+# For simplicity, this file contains only settings considered important or
+# commonly used. You can find more settings consulting the documentation:
+#
+#     https://docs.scrapy.org/en/latest/topics/settings.html
+#     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
+#     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+
+BOT_NAME = 'spider'
+
+SPIDER_MODULES = ['spider.spiders']
+NEWSPIDER_MODULE = 'spider.spiders'
+
+# Crawl responsibly by identifying yourself (and your website) on the user-agent
+USER_AGENT = '(compatible; spider; http://jwhu.com/)'
+
+# Obey robots.txt rules
+ROBOTSTXT_OBEY = False
+
+# Configure maximum concurrent requests performed by Scrapy (default: 16)
+# CONCURRENT_REQUESTS = 32
+
+# Configure a delay for requests for the same website (default: 0)
+# See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
+# See also autothrottle settings and docs
+# DOWNLOAD_DELAY = 3
+# The download delay setting will honor only one of:
+# CONCURRENT_REQUESTS_PER_DOMAIN = 16
+# CONCURRENT_REQUESTS_PER_IP = 16
+
+# Disable cookies (enabled by default)
+# COOKIES_ENABLED = False
+
+# Disable Telnet Console (enabled by default)
+# TELNETCONSOLE_ENABLED = False
+
+# Override the default request headers:
+# DEFAULT_REQUEST_HEADERS = {
+#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+#   'Accept-Language': 'en',
+# }
+
+# Enable or disable spider middlewares
+# See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+# SPIDER_MIDDLEWARES = {
+#    'tutouspider.middlewares.TutouspiderSpiderMiddleware': 543,
+# }
+
+# Enable or disable downloader middlewares
+# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
+# DOWNLOADER_MIDDLEWARES = {
+#    'tutouspider.middlewares.TutouspiderDownloaderMiddleware': 543,
+# }
+
+# Enable or disable extensions
+# See https://docs.scrapy.org/en/latest/topics/extensions.html
+# EXTENSIONS = {
+#    'scrapy.extensions.telnet.TelnetConsole': None,
+# }
+
+# Configure item pipelines
+# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+# ITEM_PIPELINES = {
+#    'tutouspider.pipelines.TutouspiderPipeline': 300,
+# }
+
+# Enable and configure the AutoThrottle extension (disabled by default)
+# See https://docs.scrapy.org/en/latest/topics/autothrottle.html
+# AUTOTHROTTLE_ENABLED = True
+# The initial download delay
+# AUTOTHROTTLE_START_DELAY = 5
+# The maximum download delay to be set in case of high latencies
+# AUTOTHROTTLE_MAX_DELAY = 60
+# The average number of requests Scrapy should be sending in parallel to
+# each remote server
+# AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+# Enable showing throttling stats for every response received:
+# AUTOTHROTTLE_DEBUG = False
+
+# Enable and configure HTTP caching (disabled by default)
+# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+# HTTPCACHE_ENABLED = True
+# HTTPCACHE_EXPIRATION_SECS = 0
+# HTTPCACHE_DIR = 'httpcache'
+# HTTPCACHE_IGNORE_HTTP_CODES = []
+# HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# configure item pipelines
+# See https:..doc.scrapy.org/en/latest/topics/item-pipeline.html
+ITEM_PIPELINES = {
+    # imageDownloadProject为工程名
+    # 'tutouspider.pipelines.MyImagePipeline': 300,  # 使用自定义继承类重命名、改路径时使用，调整优先级为最高
+    # 'scrapy.pipelines.images.ImagesPipeline':1            #自动保存时使用，引入ImagesPipeline，优先级设为最高
+    'spider.pipelines.DownloadImagesPipeline': 300,
+    'spider.pipelines.MMDPipeline': 300,
+    'spider.pipelines.URLSPipeline': 1,
+
+}
+
+IMAGES_STORE = './spider/images_store'  # 新增变量，并赋值表示路径的字符串，只能指定一个路径，可使用相对路径
+IMAGES_URLS_FIELD = 'image_urls'
+IMAGES_RESULT_FIELD = 'images'
+#IMAGES_THUMBS = {'small': (80, 80), 'big': (300, 300)}
+#HTTPERROR_ALLOWED_CODES = [301]

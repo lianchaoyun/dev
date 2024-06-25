@@ -11,7 +11,6 @@ class jwhuspiderItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
-
 class MMDItem(scrapy.Item):
     action = scrapy.Field()
     cat_name = scrapy.Field()
@@ -24,3 +23,10 @@ class URLSItem(scrapy.Item):
     action = scrapy.Field()
     name = scrapy.Field()
     urls = scrapy.Field()
+
+
+
+class ExampleItem(scrapy.Item):
+    title = scrapy.Field()
+    url = scrapy.Field()
+

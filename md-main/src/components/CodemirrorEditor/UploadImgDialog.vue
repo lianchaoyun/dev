@@ -444,6 +444,7 @@ export default {
       formCustom: {
         code:
           localStorage.getItem(`formCustomConfig`) ||
+           getFormCustomConfigCode() ||
           removeLeft(`
           const {file, util, okCb, errCb} = CUSTOM_ARG
           const param = new FormData()
@@ -623,7 +624,14 @@ export default {
 
       const config = localStorage.getItem(`${imgHost}Config`)
       const isValidHost = imgHost == `default` || config
+    
       if (!isValidHost) {
+          let formCustomConfig= getFormCustomConfigCode();
+          if(formCustomConfig){
+            localStorage.setItem(`${imgHost}Config`,formCustomConfig)
+            return true;
+          }
+
         this.$message.error(`请先配置 ${imgHost} 图床参数`)
         return false
       }

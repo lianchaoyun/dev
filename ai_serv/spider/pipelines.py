@@ -8,13 +8,11 @@
 from itemadapter import ItemAdapter
 from scrapy import Request
 from scrapy.pipelines.images import ImagesPipeline
-import os  # 用于路径拼接、判断是否存在等
+import os
 import re
 
-from hub.db.mysql import MysqlWordpress
-from hub.db.sqlite import SqliteTool
-from jwhuspider import settings
-from jwhuspider.items import URLSItem, MMDItem
+import settings
+from items import URLSItem, MMDItem
 
 cat_dic = {
     "视频推荐": 11,
@@ -35,16 +33,8 @@ class jwhuspiderPipeline:
 class URLSPipeline:
     def process_item(self, item, spider):
         if isinstance(item, URLSItem):
-            for url in item["urls"]:
-                mmd = SqliteTool.Mmd.get_or_none(SqliteTool.Mmd.url == url)
-                if mmd is None:
-                    a = SqliteTool.Mmd.create(url=url, status=0)
-                    print("新地址 [" + url + "] 入库.id=" + str(a))
+            return item
         elif isinstance(item, MMDItem):
-            mmd = SqliteTool.Mmd.get_or_none(SqliteTool.Mmd.url == item["url"])
-            if mmd is None:
-                a = SqliteTool.Mmd.create(url=item["url"], status=0)
-                print("新地址 [" + item["url"] + "] 入库.id=" + str(a))
             return item
         else:
             return item
@@ -53,29 +43,11 @@ class URLSPipeline:
 class MMDPipeline:
     def process_item(self, item, spider):
         if isinstance(item, MMDItem):
-            mmd = SqliteTool.Mmd.get_or_none(SqliteTool.Mmd.url == item["url"])
-            if mmd is None:
-                return item
-            rs = self.post_content(item)
-            ua = SqliteTool.Mmd.update(status=1, status_db=rs).where(SqliteTool.Mmd.url == item["url"]).where(
-                SqliteTool.Mmd.status.in_([0, 3])).execute()
-            print("发布文章:db=", rs, "  cache=", ua)
+            print("发布文章:db=", item)
         else:
             return item
 
-    def post_content(self, item):
-        term_taxonomy_id = cat_dic.get(item["cat_name"])
-        if term_taxonomy_id is None:
-            return 3  # 其他错误
-        else:
-            if MysqlWordpress.original_address_is_exist(item["url"]):
-                return 4
-            rs = MysqlWordpress.create(term_taxonomy_id=term_taxonomy_id, post_author=1, post_content=item['content'],
-                                       post_title=item['title'], original_address=item["url"])
-            if rs:
-                return 1  # 发布成功
-            else:
-                return 2  # 发布失败
+
 
 
 class DownloadImagesPipeline(ImagesPipeline):

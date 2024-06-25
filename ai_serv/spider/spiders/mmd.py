@@ -12,7 +12,6 @@ from bs4 import BeautifulSoup
 # scrapy crawl zuowenwang
 from tinydb import TinyDB, Query
 
-from db import MysqlTool,SqliteTool
 from spider.items import MMDItem, URLSItem
 
 

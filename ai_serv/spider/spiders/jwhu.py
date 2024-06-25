@@ -9,14 +9,11 @@ from bs4 import BeautifulSoup
 #from hub.browser.posts_learn import create
 from tinydb import TinyDB, Query
 
-db = TinyDB('./other/spiders.json')
+db = TinyDB('./tmp/spiders.json')
 
 
 # db.insert({'name': 'John', 'age': 22})
 # uu = db.search(User.name == 'John1')
-
-# update l_article_content set content=replace(content,'https://filesdown.zuowen.com/img/2020/02/04/165128_5e39309087409.jpg','http://lohoyo.com/assets/img/gh_gzh.jpg') where content like '%https://filesdown.zuowen.com/img/2020/02/04/165128_5e39309087409.jpg%';
-# update l_archives set status=0 where title like "%范文汇总"
 
 class ImageItem(scrapy.Item):
     path = scrapy.Field()  # 图片所属类别

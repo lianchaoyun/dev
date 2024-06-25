@@ -173,7 +173,7 @@ export default {
     loadById() {
       const _this = this
       let token = new URLSearchParams(window.location.search).get(`token`)
-      if (!token) {
+      if (!token) { 
         token = localStorage.getItem(`token`)
       }
       if (token) {
@@ -182,7 +182,7 @@ export default {
       let id = new URLSearchParams(window.location.search).get(`id`)
 
       service
-        .get(`http://localhost/api/watch`, {
+        .get(httpHost+`/api/watch`, {
           params: {
             token: token,
             id: id,

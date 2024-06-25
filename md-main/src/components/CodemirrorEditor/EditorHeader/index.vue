@@ -286,7 +286,7 @@ export default {
       data.token = token
 
       service
-        .post(`/api/post`, data)
+        .post(httpHost+`/api/post`, data)
         .then(function (response) {
           console.log(response)
           let data = response.data
@@ -318,8 +318,13 @@ export default {
     prePost() {
       let auto = {}
       try {
+        let elementImg = document.querySelector(`#output img`)
+        let src = ``
+        if (elementImg != null) {
+          src = elementImg.src
+        }
         auto = {
-          thumb: document.querySelector(`#output img`).src,
+          thumb: src,
           title: [1, 2, 3, 4, 5, 6]
             .map((h) => document.querySelector(`#output h${h}`))
             .filter((h) => h)[0].innerText,

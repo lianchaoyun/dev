@@ -49,7 +49,7 @@ def htmlbr(url, proxy, showWindow):
             path = os.path.abspath(os.path.join(os.getcwd(), "../../../plugin/chromedriver_win32/chromedriver"))
             browser = webdriver.Chrome(executable_path=path, options=chrome_options)
         else:
-            path = os.path.abspath(os.path.join(os.getcwd(), "../../../plugin/chromedriver_win32/chromedriver.exe"))
+            path = os.path.abspath(os.path.join(os.getcwd(), "../../plugin/chromedriver_win32/chromedriver.exe"))
             browser = webdriver.Chrome(executable_path=path, options=chrome_options)
         browser.get(url)  # 请求页面，会打开一个浏览器窗口
         time.sleep(4)
@@ -63,9 +63,10 @@ def htmlbr(url, proxy, showWindow):
 def useProxy():
     path = None
     if sysstr == "Windows":
-        path = os.path.abspath(os.path.join(os.getcwd(), "../../../plugin/browsermob-proxy-2.1.4/bin/browsermob-proxy.bat"))
+        path = os.path.abspath(os.path.join(os.getcwd(),
+                                            "../../plugin/browsermob-proxy-2.1.4/bin/browsermob-proxy.bat"))
     elif sysstr == "Linux":
-        path = os.path.abspath(os.path.join(os.getcwd(), "../../../plugin/browsermob-proxy-2.1.4/bin/browsermob-proxy"))
+        path = os.path.abspath(os.path.join(os.getcwd(), "../../plugin/browsermob-proxy-2.1.4/bin/browsermob-proxy"))
     else:
         path = os.path.abspath(os.path.join(os.getcwd(), "../../../plugin/ex/browsermob-proxy-2.1.4/bin/browsermob-proxy.bat"))
 

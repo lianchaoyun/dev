@@ -6,7 +6,7 @@
       type="info"
       show-icon
     >
-    </el-alert>
+    </el-alert> 
     <el-form
       class="postInfo"
       label-position="right"

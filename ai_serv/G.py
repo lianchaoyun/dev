@@ -21,13 +21,9 @@ from apscheduler.triggers.cron import CronTrigger
 from transitions import Machine
 from time import sleep
 import logging
+"""
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
-
-# db = SqliteDatabase('loli.db')
-db = MySQLDatabase('jwhu', user='root', password='423522', host='jwhu.com', port=3306)
-db.connect()
-
 class SuperLove(subscriber, object):
     states = ['init', 'run', "process", 'stop']
     eb = eventbus()
@@ -46,14 +42,13 @@ class SuperLove(subscriber, object):
     def process(self, eventobj):
         topic = eventobj.get_topic()
         data = eventobj.get_data()
-        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "-","main process:", data)
-
+        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "-", "main process:", data)
 
     def task_trade_time(self):
-            now = datetime.now()
-            ts = now.strftime("%Y-%m-%d %H:%M:%S")
-            self.isTradeTime = True if now.minute == 55 else False
-            print("开市任务:", ts)
+        now = datetime.now()
+        ts = now.strftime("%Y-%m-%d %H:%M:%S")
+        self.isTradeTime = True if now.minute == 55 else False
+        print("开市任务:", ts)
 
     def task_test2(self):
         now = datetime.now()
@@ -69,7 +64,8 @@ class SuperLove(subscriber, object):
 
         if self.ctptq is None or self.ctptq.isRun == False:
             print("启动交易端")
-            #importlib.reload(this)
+            # importlib.reload(this)
+
     def bf_init(self):
         print("init successful")
         trigger_futures = OrTrigger(
@@ -102,6 +98,11 @@ def _async_raise(tid, exctype):
         ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
         raise SystemError("PyThreadState_SetAsyncExc failed")
 
+"""
+
+# db = SqliteDatabase('loli.db')
+db = MySQLDatabase('wuzhen', user='root', password='423522', host='127.0.0.1', port=3306)
+db.connect()
 
 class BaseModel(Model):
     class Meta:
@@ -124,8 +125,7 @@ class Users(BaseModel):
     updated_at = DateTimeField(null=True)
 
     class Meta:
-        db_table = 'y_users'
-
+        db_table = 'users'
 
 
 class TermRelationships(BaseModel):
@@ -134,11 +134,11 @@ class TermRelationships(BaseModel):
     term_order = IntegerField(default=0)
 
     class Meta:
-        db_table = 'xwp_term_relationships'
+        db_table = 'term_relationships'
 
 
 class Options(BaseModel):
-    option_id = BigIntegerField(default=0,primary_key=True)
+    option_id = BigIntegerField(default=0, primary_key=True)
     option_name = CharField(null=True, default="")
     option_value = CharField(null=True, default="")
     autoload = CharField(null=True, default="")
@@ -146,7 +146,7 @@ class Options(BaseModel):
     desc = CharField(null=True, default="")
 
     class Meta:
-        db_table = 'xwp_options'
+        db_table = 'options'
 
 
 class Posts(BaseModel):
@@ -175,30 +175,22 @@ class Posts(BaseModel):
     comment_count = BigIntegerField(default=0)
 
     class Meta:
-        db_table = 'xwp_posts'
+        db_table = 'posts'
 
-'''
-def create1(ID, term_taxonomy_id, post_author, post_content, post_title):
-    try:
-        with db.atomic() as tx:
-            print("开始发布")
-            p_ID = Posts.create(post_author=post_author, post_content=post_content, post_title=post_title)
-            TermRelationships.create(ID=ID, object_id=p_ID, term_taxonomy_id=term_taxonomy_id)
-            print(str(p_ID) + " => 文章ID 发布成功")
-        return True
-    except Exception as err:
-        print(err)
-        return False
 
-def testYoyo21():
-    ID = 1
-    term_taxonomy_id = 1
-    post_author = 1
-    post_title = "2！"
-    post_content = "美好的站长生活从这里开始！"
-    rs = create1(ID=ID, term_taxonomy_id=term_taxonomy_id, post_author=post_author, post_content=post_content,
-                post_title=post_title)
-'''
+class Assets(BaseModel):
+    id = BigIntegerField(default=0, primary_key=True)
+    url = CharField(null=True, default="")
+    type = CharField(null=True, default="")
+    hash = CharField(null=True, default="")
+    title = CharField(null=True, default="")
+    group = CharField(null=True, default="")
+    create_date = DateTimeField(default=datetime.datetime.utcnow())
+    update_time = DateTimeField(default=datetime.datetime.utcnow())
+
+    class Meta:
+        db_table = 'assets'
+
 
 # 时间格式化 格式:23:59:59   参数: 2000-12-31 24:59:59   或者  0
 def ts2time(ts):
@@ -233,7 +225,6 @@ def clean_attrs(tag):
                 print("成功删除属性")
                 break
     return tag
-
 
 
 # 日志打印
@@ -347,6 +338,30 @@ def renameFiles(folder_path):
             index += 1
 
 
+'''
+def create1(ID, term_taxonomy_id, post_author, post_content, post_title):
+    try:
+        with db.atomic() as tx:
+            print("开始发布")
+            p_ID = Posts.create(post_author=post_author, post_content=post_content, post_title=post_title)
+            TermRelationships.create(ID=ID, object_id=p_ID, term_taxonomy_id=term_taxonomy_id)
+            print(str(p_ID) + " => 文章ID 发布成功")
+        return True
+    except Exception as err:
+        print(err)
+        return False
+
+def testYoyo21():
+    ID = 1
+    term_taxonomy_id = 1
+    post_author = 1
+    post_title = "2！"
+    post_content = "美好的站长生活从这里开始！"
+    rs = create1(ID=ID, term_taxonomy_id=term_taxonomy_id, post_author=post_author, post_content=post_content,
+                post_title=post_title)
+'''
+
+
 # 处理数据库数据
 def process_db_data():
     for i in range(1, 6000):
@@ -354,9 +369,9 @@ def process_db_data():
             print(i)
             p = Posts.get(Posts.ID == i)
             if p:
-                #soup = BeautifulSoup(p.post_content, 'html.parser')
-                #soup = clean_attrs(soup)
-                #cc = Posts.update(post_content=str(soup)).where(Posts.ID == i).execute()
+                # soup = BeautifulSoup(p.post_content, 'html.parser')
+                # soup = clean_attrs(soup)
+                # cc = Posts.update(post_content=str(soup)).where(Posts.ID == i).execute()
                 print(p.post_title)
             else:
                 print("none")
@@ -365,14 +380,30 @@ def process_db_data():
     print("===========完成============")
 
 
-def zhenzhen():
-    #sl = SuperLove("SuperLove")
-    #reload = Options.get(group="trade", option_name="reload")
-    #restart = Options.get(group="trade", option_name="restart")
-    #print(reload, restart.option_name,restart.option_value)
-    process_db_data()
+def process_data_db_assets(dir):
+    dir = dir if dir else "C:\project\data"
+    for root, dirs, files in os.walk(dir):
+        for file in files:
+            realPath = os.path.join(root, file)
+            hash = file2hash(realPath)
+            type = file_extension(realPath)
+            if type in ["jpg","jpeg","png","gif","webp"]:
+                type="image"
+            elif type in ["mp4"]:
+                type = "video"
+            row = Assets.get_or_none(Assets.hash == hash)
+            try:
+                with db.atomic() as tx:
+                    if  row:
+                        r = Assets.update(url=realPath[len(dir):], type=type).where(Assets.hash == hash).execute()
+                    else:
+                        r = Assets.create(url=realPath[len(dir):], type=type, hash=hash)
+                    print(realPath, hash, r)
+
+            except Exception as err:
+                print(err)
 
 
-
-if __name__ == '__main__':
-    zhenzhen()
+if __name__ == '__main__a':
+    #zhenzhen(
+    pass

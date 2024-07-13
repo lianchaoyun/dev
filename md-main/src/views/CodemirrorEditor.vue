@@ -172,19 +172,11 @@ export default {
     // todo 处理事件覆盖
     loadById() {
       const _this = this
-      let token = new URLSearchParams(window.location.search).get(`token`)
-      if (!token) { 
-        token = localStorage.getItem(`token`)
-      }
-      if (token) {
-        localStorage.setItem(`token`, token)
-      }
       let id = new URLSearchParams(window.location.search).get(`id`)
 
       service
         .get(httpHost+`/api/watch`, {
           params: {
-            token: token,
             id: id,
           },
         })

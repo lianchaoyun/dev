@@ -273,17 +273,11 @@ export default {
   },
   methods: {
     postById(data) {
-      const _this = this
-      let token = new URLSearchParams(window.location.search).get(`token`)
-      if (!token) {
-        token = localStorage.getItem(`token`)
-      }
-      if (token) {
-        localStorage.setItem(`token`, token)
-      }
+      const _this = this;
+      let user = JSON.parse(localStorage.getItem("user"));
       let id = new URLSearchParams(window.location.search).get(`id`)
       data.id = id
-      data.token = token
+      data.token = user?user.user_token:"";
 
       service
         .post(httpHost+`/api/post`, data)

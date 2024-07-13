@@ -21,6 +21,7 @@ from apscheduler.triggers.cron import CronTrigger
 from transitions import Machine
 from time import sleep
 import logging
+
 """
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
@@ -104,9 +105,23 @@ def _async_raise(tid, exctype):
 db = MySQLDatabase('wuzhen', user='root', password='423522', host='127.0.0.1', port=3306)
 db.connect()
 
+
 class BaseModel(Model):
     class Meta:
         database = db
+
+
+class BlockchainAddress(BaseModel):
+    id = BigIntegerField(default=0)
+    balance = DoubleField(null=True)
+    trxAddress = CharField(null=True)
+    ethAddress = CharField(null=True)
+    btcAddress = CharField(null=True)
+    private_key = CharField(null=True)
+    create_at = DateTimeField(null=True)
+
+    class Meta:
+        db_table = 'blockchain_address'
 
 
 class Users(BaseModel):
@@ -338,6 +353,16 @@ def renameFiles(folder_path):
             index += 1
 
 
+#判断字符串是否有l个相同字符
+def same_last_char(s,l):
+    le = len(s)
+    if le <l:
+        return False
+    for i in range(l-1):
+        if s[le-i-2] != s[le-i-1]:
+            return False
+    return True
+
 '''
 def create1(ID, term_taxonomy_id, post_author, post_content, post_title):
     try:
@@ -387,14 +412,14 @@ def process_data_db_assets(dir):
             realPath = os.path.join(root, file)
             hash = file2hash(realPath)
             type = file_extension(realPath)
-            if type in ["jpg","jpeg","png","gif","webp"]:
-                type="image"
+            if type in ["jpg", "jpeg", "png", "gif", "webp"]:
+                type = "image"
             elif type in ["mp4"]:
                 type = "video"
             row = Assets.get_or_none(Assets.hash == hash)
             try:
                 with db.atomic() as tx:
-                    if  row:
+                    if row:
                         r = Assets.update(url=realPath[len(dir):], type=type).where(Assets.hash == hash).execute()
                     else:
                         r = Assets.create(url=realPath[len(dir):], type=type, hash=hash)
@@ -405,5 +430,5 @@ def process_data_db_assets(dir):
 
 
 if __name__ == '__main__a':
-    #zhenzhen(
+    # zhenzhen(
     pass

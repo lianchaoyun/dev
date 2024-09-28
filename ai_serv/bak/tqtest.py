@@ -198,7 +198,7 @@ from datetime import datetime
 
 def tqTest():
     from tqsdk import TqApi, TqAuth, TqKq, TqAccount, TqBacktest
-    envapi = 1
+    envapi = 2
     if envapi == 1:  # 实盘
         api = TqApi(TqAccount("H徽商期货", "807599", "meng12051206"),
                     # auth=TqAuth("meng423522", "meng423522"),
@@ -239,6 +239,7 @@ def tqTest():
 
 
 def test():
+    tqTest()
     pass
 
 
